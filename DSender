@@ -1,0 +1,33 @@
+import subprocess
+import time
+import discord
+import requests
+
+# checks to see if an application is open
+
+def appExists(appName):
+    call = 'TASKLIST', '/FI', 'imagename eq %s' % appName
+    # use buildin check_output right away
+    output = subprocess.check_output(call).decode()
+    # check in last line for process name
+    lastLine = output.strip().split('\r\n')[-1]
+    # because Fail message could be translated
+    return lastLine.lower().startswith(appName.lower())
+
+# I want it to check to see if discord is open
+
+while appExists("Discord.exe"):
+    # send a message
+    print("good")
+    time.sleep(5)
+
+    mUrl = "https://discord.com/api/webhooks/841190611977633802/O5mFw_OxCLi5nxfBH5vvH7x_rLr7l8KsKzoaKCk08RAOgl3965QZpCBEmm_tdXSUldl9"
+    data = {"content": 'abc'}
+    response = requests.post(mUrl, json=data)
+    print(response.status_code)
+    print(response.content)
+    
+    if appExists("asdasd"):
+        print("asdasd")
+    else:
+        print("not asdasd")
